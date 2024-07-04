@@ -16,6 +16,7 @@
 , libXi
 , libXrandr
 , libXfixes
+, wrapperDir ? "/run/wrappers/bin"
 }:
 
 stdenv.mkDerivation {
@@ -56,7 +57,7 @@ stdenv.mkDerivation {
   mesonFlags = [
     "-Dsystemd=true"
 
-    # FIXME: Capabilities can not be set if not running the build with root permissions.
+    # Capabilities are handled by security.wrappers if possible.
     "-Dcapabilities=false"
   ];
 
@@ -65,6 +66,7 @@ stdenv.mkDerivation {
     mv $out/bin/gpu-screen-recorder $out/bin/.wrapped/
     makeWrapper "$out/bin/.wrapped/gpu-screen-recorder" "$out/bin/gpu-screen-recorder" \
     --prefix LD_LIBRARY_PATH : ${libglvnd}/lib \
+    --prefix PATH : ${wrapperDir} \
     --suffix PATH : $out/bin
   '';
 
