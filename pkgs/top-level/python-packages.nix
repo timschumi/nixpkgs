@@ -2649,6 +2649,10 @@ self: super: with self; {
   cryptography = callPackage ../development/python-modules/cryptography {
     inherit (pkgs.darwin.apple_sdk.frameworks) Security;
   };
+  # This older version is only for `ceph`, you shouldn't use this otherwise:
+  cryptography_40 = callPackage ../development/python-modules/cryptography/40.nix {
+    inherit (pkgs.darwin.apple_sdk.frameworks) Security;
+  };
 
   cryptolyzer = callPackage ../development/python-modules/cryptolyzer { };
 
