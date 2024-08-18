@@ -7,6 +7,7 @@
 , pkg-config
 , libXcomposite
 , libpulseaudio
+, dbus
 , ffmpeg
 , wayland
 , libdrm
@@ -16,18 +17,19 @@
 , libXi
 , libXrandr
 , libXfixes
+, pipewire
 , wrapperDir ? "/run/wrappers/bin"
 }:
 
 stdenv.mkDerivation {
   pname = "gpu-screen-recorder";
-  version = "unstable-2024-07-05";
+  version = "4.1.2";
 
   # Snapshot tarballs use the following versioning format:
   # printf "r%s.%s\n" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
   src = fetchurl {
-    url = "https://dec05eba.com/snapshot/gpu-screen-recorder.git.r641.48cd80f.tar.gz";
-    hash = "sha256-hIEK8EYIxQTTiFePPZf4V0nsxqxkfcDeOG9GK9whn+0=";
+    url = "https://dec05eba.com/snapshot/gpu-screen-recorder.git.r730.81e0b1c.tar.gz";
+    hash = "sha256-x4EBMSMMg5sMTCdVsGTF9Op8Lb9qwdE5RbkwVJEhvcA=";
   };
   sourceRoot = ".";
 
@@ -41,6 +43,7 @@ stdenv.mkDerivation {
   buildInputs = [
     libXcomposite
     libpulseaudio
+    dbus
     ffmpeg
     wayland
     libdrm
@@ -49,10 +52,11 @@ stdenv.mkDerivation {
     libXi
     libXrandr
     libXfixes
+    pipewire
   ];
 
   patches = [
-    ./0001-Don-t-install-systemd-unit-files-using-absolute-path.patch
+    ./0001-Don-t-install-files-using-absolute-paths.patch
   ];
 
   mesonFlags = [
