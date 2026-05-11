@@ -4,10 +4,10 @@
   gsettings-desktop-schemas,
   lib,
   libglvnd,
-  libX11,
-  libXext,
-  libXrandr,
-  libXrender,
+  libx11,
+  libxext,
+  libxrandr,
+  libxrender,
   makeWrapper,
   meson,
   ninja,
@@ -38,10 +38,10 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     libglvnd
     pango
-    libX11
-    libXrandr
-    libXrender
-    libXext
+    libx11
+    libxrandr
+    libxrender
+    libxext
     wayland
     wayland-scanner
     gsettings-desktop-schemas
