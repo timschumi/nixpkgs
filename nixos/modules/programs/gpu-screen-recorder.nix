@@ -60,7 +60,7 @@ in
         };
       }
 
-      (lib.mkIf cfg.overlayUI.enable {
+      (lib.mkIf cfg.ui.enable {
         environment.systemPackages = [
           cfg.uiPackage
           cfg.notifPackage
@@ -73,7 +73,7 @@ in
           source = lib.getExe' uiPackage "gsr-global-hotkeys";
         };
 
-        systemd.user.services."gpu-screen-recorder-ui" = lib.mkIf cfg.overlayUI.autoStart {
+        systemd.user.services."gpu-screen-recorder-ui" = lib.mkIf cfg.ui.autoStart {
           description = "GPU Screen Recorder UI";
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
