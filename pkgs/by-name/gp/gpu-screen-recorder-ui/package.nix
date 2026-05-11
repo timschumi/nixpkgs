@@ -1,0 +1,111 @@
+{
+  dbus,
+  desktop-file-utils,
+  fetchgit,
+  gitUpdater,
+  gpu-screen-recorder,
+  gpu-screen-recorder-notification,
+  gsettings-desktop-schemas,
+  lib,
+  libcap,
+  libdrm,
+  libglvnd,
+  libpulseaudio,
+  libX11,
+  libXcomposite,
+  libXcursor,
+  libXext,
+  libXfixes,
+  libXi,
+  libXrandr,
+  libXrender,
+  linuxHeaders,
+  makeWrapper,
+  meson,
+  ninja,
+  pango,
+  pkg-config,
+  stdenv,
+  wayland-scanner,
+  wayland,
+  wrapperDir ? "/run/wrappers/bin",
+}:
+
+stdenv.mkDerivation (finalAttrs: {
+  pname = "gpu-screen-recorder-ui";
+  version = "1.11.8";
+
+  src = fetchgit {
+    url = "https://repo.dec05eba.com/gpu-screen-recorder-ui";
+    tag = finalAttrs.version;
+    hash = "sha256-wDoeDiUAQHggJr3qaRoY5Q3Hw4JuuZ7Etw/Up6Ypp/o=";
+  };
+
+  nativeBuildInputs = [
+    meson
+    ninja
+    pkg-config
+    makeWrapper
+    desktop-file-utils
+  ];
+
+  buildInputs = [
+    libX11
+    libXrandr
+    libXrender
+    libXcomposite
+    libXfixes
+    libXext
+    libXi
+    libXcursor
+    libglvnd
+    libpulseaudio
+    libdrm
+    dbus
+    linuxHeaders
+    wayland
+    wayland-scanner
+    pango
+    libcap
+    gsettings-desktop-schemas
+  ];
+
+  mesonBuildType = "release";
+
+  mesonFlags = [
+    # should be handled in the nixos module
+    (lib.mesonBool "capabilities" false)
+  ];
+
+  postInstall =
+    let
+      gpu-screen-recorder-wrapped = gpu-screen-recorder.override {
+        inherit wrapperDir;
+      };
+    in
+    ''
+      wrapProgram "$out/bin/${finalAttrs.meta.mainProgram}" \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libglvnd ]}" \
+        --prefix XDG_DATA_DIRS : "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}" \
+        --prefix PATH : "${wrapperDir}" \
+        --suffix PATH : "${
+          lib.makeBinPath [
+            gpu-screen-recorder-wrapped
+            gpu-screen-recorder-notification
+          ]
+        }"
+    '';
+
+  passthru.updateScript = gitUpdater { };
+
+  meta = {
+    description = "A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay";
+    homepage = "https://git.dec05eba.com/gpu-screen-recorder-ui/about";
+    license = lib.licenses.gpl3Only;
+    mainProgram = "gsr-ui";
+    maintainers = with lib.maintainers; [
+      AhmedAmr
+    ];
+    platforms = [ "x86_64-linux" ];
+  };
+})
