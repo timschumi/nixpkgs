@@ -61,7 +61,7 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.updateScript = gitUpdater { };
 
   meta = {
-    description = "Notification in the style of ShadowPlay.";
+    description = "Notification in the style of ShadowPlay";
     homepage = "https://git.dec05eba.com/gpu-screen-recorder-notification/about";
     license = lib.licenses.gpl3Only;
     mainProgram = "gsr-notify";
