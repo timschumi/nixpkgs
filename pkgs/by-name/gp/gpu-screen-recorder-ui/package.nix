@@ -11,14 +11,14 @@
   libdrm,
   libglvnd,
   libpulseaudio,
-  libX11,
-  libXcomposite,
-  libXcursor,
-  libXext,
-  libXfixes,
-  libXi,
-  libXrandr,
-  libXrender,
+  libx11,
+  libxcomposite,
+  libxcursor,
+  libxext,
+  libxfixes,
+  libxi,
+  libxrandr,
+  libxrender,
   linuxHeaders,
   makeWrapper,
   meson,
@@ -50,14 +50,14 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    libX11
-    libXrandr
-    libXrender
-    libXcomposite
-    libXfixes
-    libXext
-    libXi
-    libXcursor
+    libx11
+    libxrandr
+    libxrender
+    libxcomposite
+    libxfixes
+    libxext
+    libxi
+    libxcursor
     libglvnd
     libpulseaudio
     libdrm
