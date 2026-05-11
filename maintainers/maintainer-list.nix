@@ -862,6 +862,12 @@
     githubId = 209175;
     name = "Alesya Huzik";
   };
+  AhmedAmr = {
+    email = "ahmedamr24680@gmail.com";
+    github = "AhmedAmrNabil";
+    githubId = 43810060;
+    name = "Ahmed Amr";
+  };
   Ai-Ya-Ya = {
     email = "spg2500@gmail.com";
     github = "Ai-Ya-Ya";
