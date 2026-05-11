@@ -110,5 +110,6 @@ stdenv.mkDerivation (finalAttrs: {
       AhmedAmr
     ];
     platforms = [ "x86_64-linux" ];
+    sourceProvenance = with lib.sourceTypes; [ fromSource ];
   };
 })
