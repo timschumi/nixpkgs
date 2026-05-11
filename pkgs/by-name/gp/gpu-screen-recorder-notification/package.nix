@@ -47,6 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
     gsettings-desktop-schemas
   ];
 
+  __structuredAttrs = true;
   strictDeps = true;
 
   mesonBuildType = "release";
