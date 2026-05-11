@@ -102,7 +102,7 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.updateScript = gitUpdater { };
 
   meta = {
-    description = "A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay";
+    description = "Fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay";
     homepage = "https://git.dec05eba.com/gpu-screen-recorder-ui/about";
     license = lib.licenses.gpl3Only;
     mainProgram = "gsr-ui";
