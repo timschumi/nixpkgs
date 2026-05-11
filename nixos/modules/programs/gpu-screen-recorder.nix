@@ -32,7 +32,7 @@ in
         '';
       };
 
-      overlayUI = {
+      ui = {
         enable = lib.mkEnableOption "the GPU Screen Recorder overlay UI";
 
         autoStart = lib.mkOption {
