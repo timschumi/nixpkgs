@@ -11,7 +11,7 @@ let
     inherit (config.security) wrapperDir;
   };
 
-  uiPackage = cfg.uiPackage.override {
+  uiPackage = cfg.ui.package.override {
     gpu-screen-recorder = package;
     inherit (config.security) wrapperDir;
   };
@@ -20,8 +20,6 @@ in
   options = {
     programs.gpu-screen-recorder = {
       package = lib.mkPackageOption pkgs "gpu-screen-recorder" { };
-      uiPackage = lib.mkPackageOption pkgs "gpu-screen-recorder-ui" { };
-      notifPackage = lib.mkPackageOption pkgs "gpu-screen-recorder-notification" { };
 
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -34,6 +32,8 @@ in
 
       ui = {
         enable = lib.mkEnableOption "the GPU Screen Recorder overlay UI";
+        package = lib.mkPackageOption pkgs "gpu-screen-recorder-ui" { };
+        notifPackage = lib.mkPackageOption pkgs "gpu-screen-recorder-notification" { };
 
         autoStart = lib.mkOption {
           type = lib.types.bool;
@@ -62,8 +62,8 @@ in
 
       (lib.mkIf cfg.ui.enable {
         environment.systemPackages = [
-          cfg.uiPackage
-          cfg.notifPackage
+          cfg.ui.package
+          cfg.ui.notifPackage
         ];
 
         security.wrappers."gsr-global-hotkeys" = {
