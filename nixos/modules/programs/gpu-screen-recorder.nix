@@ -35,9 +35,7 @@ in
         package = lib.mkPackageOption pkgs "gpu-screen-recorder-ui" { };
         notifPackage = lib.mkPackageOption pkgs "gpu-screen-recorder-notification" { };
 
-        autoStart = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
+        autoStart = lib.mkEnableOption "" // {
           description = ''
             Whether to start the GPU Screen Recorder overlay UI automatically
             on login via a systemd user service.
